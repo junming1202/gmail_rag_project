@@ -1,0 +1,17 @@
+# --- Core AI & Schema ---
+openai
+ollama
+huggingface_hub
+sentence_transformers
+
+# --- Data & Utilities ---
+numpy
+psutil
+typing_extensions
+typing_inspection
+gradio
+
+# --- Environment Support ---
+ipykernel
+dotenv
+tqdm
