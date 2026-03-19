@@ -3,6 +3,7 @@ openai
 ollama
 huggingface_hub
 sentence_transformers
+lmstudio
 
 # --- Data & Utilities ---
 numpy
