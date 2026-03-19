@@ -15,6 +15,7 @@ gradio
 ipykernel
 dotenv
 tqdm
+ipython
 
 # --- Google environment ---
 google-api-python-client

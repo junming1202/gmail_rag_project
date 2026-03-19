@@ -2,3 +2,4 @@
 .venv
 .credentials
 token.json
+gmail/__pycache__
