@@ -1,13 +1,10 @@
 from sentence_transformers import SentenceTransformer
 from chromadb import PersistentClient
 
-DB_PATH = "../preprocessed_db"
-collection_name = "docs"
 
 
-def create_embeddings(emails):
-    
 
+def create_embeddings(emails, DB_PATH: str, collection_name: str):
     chroma = PersistentClient(path = DB_PATH)
     if collection_name in [c.name for c in chroma.list_collections()]:
         chroma.delete_collection(collection_name)
