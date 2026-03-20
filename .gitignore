@@ -3,3 +3,4 @@
 .credentials
 token.json
 gmail/__pycache__
+preprocessed_db

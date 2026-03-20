@@ -11,6 +11,7 @@ psutil
 typing_extensions
 typing_inspection
 gradio
+chromadb
 
 # --- Environment Support ---
 ipykernel
