@@ -12,6 +12,8 @@ typing_extensions
 typing_inspection
 gradio
 chromadb
+plotly
+nbformat>=4.2.0
 
 # --- Environment Support ---
 ipykernel
