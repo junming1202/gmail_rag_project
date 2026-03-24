@@ -58,51 +58,51 @@ For example,
 
 
 def preprocess_emails(emails):
-  for email in tqdm(emails):
-    title = email["title"]
-    body = email["body"]
-    user_prompt = f""" 
-    Please help to provide category and summary of the email based on title and/or body. 
-    Keep the summary to one or several sentences that are clear, concise and straight to the point. 
+    for email in tqdm(emails):
+        title = email["title"]
+        body = email["body"]
+        user_prompt = f""" 
+        Please help to provide category and summary of the email based on title and/or body. 
+        Keep the summary to one or several sentences that are clear, concise and straight to the point. 
 
-    Here is the title of the email:
-    {title}
+        Here is the title of the email:
+        {title}
 
 
-    {"Here is the body of the email: " + body if body else "This email body does not contain any text. Please categorize and summarize based on the title only."}
-    """
-    messages = [{"role":"system", "content": system_prompt},
-            {"role": "user", "content": user_prompt}]
+        {"Here is the body of the email: " + body if body else "This email body does not contain any text. Please categorize and summarize based on the title only."}
+        """
+        messages = [{"role":"system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}]
 
-    # response = llm_client.chat.completions.create(model = llm_model, messages = messages, max_tokens = 2000)
-    attempt = 0
-    max_attempt = 5
-    while attempt < max_attempt:
-      attempt += 1
-      try:
-        response = ollama.chat(model = llm_model, 
-                          messages = messages, 
-                          format=Email_llm_output.model_json_schema(),
-                          options={
-                                    'num_predict': 2000,  # This is Ollama's version of max_tokens
-                                })
-        raw_content = response["message"]["content"]
-        data = Email_llm_output.model_validate(json.loads(raw_content))
-        if data:
-          break
+        # response = llm_client.chat.completions.create(model = llm_model, messages = messages, max_tokens = 2000)
+        attempt = 0
+        max_attempt = 5
+        while attempt < max_attempt:
+            attempt += 1
+            try:
+                response = ollama.chat(model = llm_model, 
+                                    messages = messages, 
+                                    format=Email_llm_output.model_json_schema(),
+                                    options={
+                                            'num_predict': 2000,  # This is Ollama's version of max_tokens
+                                        })
+                raw_content = response["message"]["content"]
+                data = Email_llm_output.model_validate(json.loads(raw_content))
+                if data:
+                    break
 
-      except Exception as e:
-        last_exception = e
-        print(f"Attempt {attempt} failed: {e}")
-        if attempt == max_attempt:
-          print("Max retries reached. Raising exception.")
-          raise(last_exception)
+            except Exception as e:
+                last_exception = e
+                print(f"Attempt {attempt} failed: {e}")
+                if attempt == max_attempt:
+                    print("Max retries reached. Raising exception.")
+                    raise(last_exception)
 
-    email["category"] = data.category
-    email["summary"] = data.summary
+        email["category"] = data.category
+        email["summary"] = data.summary
 
-  emails = Emails.model_validate({"emails":emails})
-  return emails
+    emails = Emails.model_validate({"emails":emails})
+    return emails
 
 
 # setup embedding model
