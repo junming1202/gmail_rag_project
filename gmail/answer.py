@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field, conint
 from typing import Literal
-from ingest import RankOrder, Result
+from gmail.ingest import Result
 import ollama
 from huggingface_hub import login
 from sentence_transformers import SentenceTransformer
@@ -126,7 +126,6 @@ def answer_question(question: str, history: list[dict] = []) -> [str]:
     """
 
     history = [{"role": h["role"], "content": normalize_message_content(h["content"])} for h in history]
-    print(history)
     query = rewrite_query(question, history)
     chunks = fetch_context(query)
     messages = make_rag_messages(question, history, chunks)
